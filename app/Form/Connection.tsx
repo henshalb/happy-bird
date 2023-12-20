@@ -7,6 +7,7 @@ import {
   Button,
   rem,
   Group,
+  PasswordInput,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
@@ -87,7 +88,7 @@ function ConnectionForm() {
           defaultValue={state.username}
           onChange={(e) => handleClick("username", e.target.value)}
         />
-        <TextInput
+        <PasswordInput
           label="MySQL Password"
           disabled={state.connected}
           placeholder="Database password"

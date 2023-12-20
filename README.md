@@ -1,5 +1,13 @@
-# Mantine Remix template
+### Coding challenge
 
-Get started with the template by clicking `Use this template` button on the top of the page.
+### How to run locally?
+Clone repository and in the project directory
+```
+bun i && bun run dev
+```
 
-[Documentation](https://mantine.dev/guides/remix/)
+### Tech stack
+- Expressjs
+- Reactjs
+- Mantine
+- mysql2

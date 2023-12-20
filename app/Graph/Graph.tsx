@@ -5,15 +5,8 @@ import Chart from "chart.js/auto";
 import "chartjs-adapter-moment";
 import moment from "moment";
 import { useAppContext } from "~/utils/store";
+import { dailyAccountBalance, dailyEmailLog, thermometerLog } from "./resolve";
 
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
 
 export const LineChart = ({ data }) => {
   const chartRef = useRef(null);
@@ -42,103 +35,11 @@ export const LineChart = ({ data }) => {
       }
 
       if (state.graphTitle == "AC Thermometer Log") {
-        const timestamps = data?.success?.map((entry) =>
-          moment(entry.timestamp)
-        );
-        const temperatures = data?.success?.map((entry) =>
-          parseFloat(entry.temperature)
-        );
-        chartRef.current = new Chart(chart, {
-          type: "line",
-          data: {
-            labels: timestamps.map((timestamp) => timestamp.format()),
-            datasets: [
-              {
-                label: "Temperature",
-                data: temperatures,
-                borderColor: "blue",
-                fill: false,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              x: {
-                type: "time",
-                time: {
-                  unit: "day",
-                },
-              },
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
+        chartRef.current = thermometerLog(chart, data)
       } else if (state.graphTitle == "Daily Email Log") {
-        const logDates = data?.success?.map((entry) => moment(entry.log_date));
-
-        const employeeData = Object.keys(data?.success[0])
-          .filter((key) => key !== "log_date")
-          .map((employee) => ({
-            label: employee,
-            data: data?.success?.map((entry) => entry[employee]),
-          }));
-
-        chartRef.current = new Chart(chart, {
-          type: "line",
-          data: {
-            labels: logDates,
-            datasets: employeeData.map((employee) => ({
-              label: employee.label,
-              data: employee.data,
-              borderColor: getRandomColor(),
-              fill: false,
-            })),
-          },
-          options: {
-            scales: {
-              x: {
-                type: "time",
-                time: {
-                  unit: "day",
-                },
-              },
-            },
-          },
-        });
+        chartRef.current = dailyEmailLog(chart, data)
       } else if (state.graphTitle == "Daily Account Balance") {
-        const balanceDates = data?.success?.map((entry) =>
-          moment(entry.balance_date)
-        );
-        const balances = data?.success?.map((entry) =>
-          parseFloat(entry.balance)
-        );
-
-        chartRef.current = new Chart(chart, {
-          type: "line",
-          data: {
-            labels: balanceDates,
-            datasets: [
-              {
-                label: "Balance",
-                data: balances,
-                borderColor: "blue",
-                fill: false,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              x: {
-                type: "time",
-                time: {
-                  unit: "day",
-                },
-              },
-            },
-          },
-        });
+        chartRef.current = dailyAccountBalance(chart, data)
       }
     }
   }, [, data, state.graphTitle]);
