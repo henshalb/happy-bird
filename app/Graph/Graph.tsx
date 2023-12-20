@@ -1,12 +1,9 @@
 import { Button, Card, Title, Text, Flex } from "@mantine/core";
 
 import { useEffect, useRef } from "react";
-import Chart from "chart.js/auto";
 import "chartjs-adapter-moment";
-import moment from "moment";
 import { useAppContext } from "~/utils/store";
 import { dailyAccountBalance, dailyEmailLog, thermometerLog } from "./resolve";
-
 
 export const LineChart = ({ data }) => {
   const chartRef = useRef(null);
@@ -35,11 +32,11 @@ export const LineChart = ({ data }) => {
       }
 
       if (state.graphTitle == "AC Thermometer Log") {
-        chartRef.current = thermometerLog(chart, data)
+        chartRef.current = thermometerLog(chart, data);
       } else if (state.graphTitle == "Daily Email Log") {
-        chartRef.current = dailyEmailLog(chart, data)
+        chartRef.current = dailyEmailLog(chart, data);
       } else if (state.graphTitle == "Daily Account Balance") {
-        chartRef.current = dailyAccountBalance(chart, data)
+        chartRef.current = dailyAccountBalance(chart, data);
       }
     }
   }, [, data, state.graphTitle]);
@@ -51,7 +48,7 @@ export const LineChart = ({ data }) => {
       </Title>
       <Text size={"xs"}>Hover to see specific detail</Text>
       {data?.success ? (
-        <canvas id="chart-canvas" width="400" height="100"></canvas>
+        <canvas id="chart-canvas" width="400" height="150"></canvas>
       ) : (
         <Flex align={"center"} justify={"center"} h={"200px"}>
           <Text c={"dimmed"} size={"sm"}>
