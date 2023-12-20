@@ -1,6 +1,7 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 export default {
   postcss: true,
+  serverModuleFormat: 'esm',
   ignoredRouteFiles: ["**/.*"],
   // browserNodeBuiltinsPolyfill: {
   //   modules: {
