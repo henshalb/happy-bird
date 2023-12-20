@@ -6,10 +6,11 @@ import {
   Text,
   Button,
   rem,
+  Group,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useAppContext } from "~/utils/state/store";
+import { useAppContext } from "~/utils/store";
 import { IconCheck, IconCircle, IconCircleFilled } from "@tabler/icons-react";
 
 function ConnectionForm() {
@@ -76,14 +77,12 @@ function ConnectionForm() {
           label="MySQL Database"
           placeholder="Database name"
           disabled={state.connected}
-
           defaultValue={state.database}
           onChange={(e) => handleClick("database", e.target.value)}
         />
         <TextInput
           label="MySQL Username"
           disabled={state.connected}
-
           placeholder="Database username"
           defaultValue={state.username}
           onChange={(e) => handleClick("username", e.target.value)}
@@ -91,23 +90,37 @@ function ConnectionForm() {
         <TextInput
           label="MySQL Password"
           disabled={state.connected}
-
           placeholder="Database password"
           defaultValue={state.password}
           onChange={(e) => handleClick("password", e.target.value)}
         />
       </SimpleGrid>
       {state.connected ? (
-        <Button
-          mt={"sm"}
-          w={"min-content"}
-          variant={"default"}
-          fullWidth={false}
-          c={"green"}
-        >
-          Connected
-          <IconCircleFilled color={"green"} size={15} style={{ marginLeft: rem(8)}} />
-        </Button>
+        <Group>
+          <Button
+            mt={"sm"}
+            w={"min-content"}
+            variant={"default"}
+            fullWidth={false}
+            c={"green"}
+          >
+            Connected
+            <IconCircleFilled
+              color={"green"}
+              size={15}
+              style={{ marginLeft: rem(8) }}
+            />
+          </Button>
+          <Button
+            mt={"sm"}
+            w={"min-content"}
+            variant={"light"}
+            fullWidth={false}
+            onClick={()=>{dispatch({connected: false})}}
+          >
+            Edit
+          </Button>
+          </Group>
       ) : (
         <Button
           disabled={buttonDisabled}

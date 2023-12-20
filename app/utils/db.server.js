@@ -2,6 +2,7 @@ import mysql from "mysql2";
 
 
 export const connectDatabase = (host, database, username, password) => {
+  
   const connection = mysql.createConnection({
     host: host,
     database: database,

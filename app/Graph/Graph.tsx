@@ -1,10 +1,10 @@
-import { Button, Card, Title, Text } from "@mantine/core";
+import { Button, Card, Title, Text, Flex } from "@mantine/core";
 
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import "chartjs-adapter-moment";
 import moment from "moment";
-import { useAppContext } from "~/utils/state/store";
+import { useAppContext } from "~/utils/store";
 
 const getRandomColor = () => {
   const letters = "0123456789ABCDEF";
@@ -22,12 +22,12 @@ export const LineChart = ({ data }) => {
   useEffect(() => {
     const chart = document.getElementById("chart-canvas");
     if (chartRef.current) {
-        chartRef.current.destroy();
-        chartRef.current = null
-      }
+      chartRef.current.destroy();
+      chartRef.current = null;
+    }
 
-    if (data) {
-      if (data?.length > 0) {
+    if (data?.success) {
+      if (data?.success?.length > 0) {
         let givenNames = {
           timestamp: "AC Thermometer Log",
           log_date: "Daily Email Log",
@@ -35,15 +35,19 @@ export const LineChart = ({ data }) => {
         };
 
         for (var name in givenNames) {
-          if (data[0].hasOwnProperty(name)) {
+          if (data?.success[0].hasOwnProperty(name)) {
             dispatch({ graphTitle: givenNames[name] });
           }
         }
       }
 
       if (state.graphTitle == "AC Thermometer Log") {
-        const timestamps = data.map((entry) => moment(entry.timestamp));
-        const temperatures = data.map((entry) => parseFloat(entry.temperature));
+        const timestamps = data?.success?.map((entry) =>
+          moment(entry.timestamp)
+        );
+        const temperatures = data?.success?.map((entry) =>
+          parseFloat(entry.temperature)
+        );
         chartRef.current = new Chart(chart, {
           type: "line",
           data: {
@@ -60,9 +64,9 @@ export const LineChart = ({ data }) => {
           options: {
             scales: {
               x: {
-                type: "time", // Use 'time' for date scales
+                type: "time",
                 time: {
-                  unit: "day", // Adjust the time unit based on your data
+                  unit: "day",
                 },
               },
               y: {
@@ -72,13 +76,13 @@ export const LineChart = ({ data }) => {
           },
         });
       } else if (state.graphTitle == "Daily Email Log") {
-        const logDates = data.map((entry) => moment(entry.log_date));
+        const logDates = data?.success?.map((entry) => moment(entry.log_date));
 
-        const employeeData = Object.keys(data[0])
+        const employeeData = Object.keys(data?.success[0])
           .filter((key) => key !== "log_date")
           .map((employee) => ({
             label: employee,
-            data: data.map((entry) => entry[employee]),
+            data: data?.success?.map((entry) => entry[employee]),
           }));
 
         chartRef.current = new Chart(chart, {
@@ -104,8 +108,12 @@ export const LineChart = ({ data }) => {
           },
         });
       } else if (state.graphTitle == "Daily Account Balance") {
-        const balanceDates = data.map((entry) => moment(entry.balance_date));
-        const balances = data.map((entry) => parseFloat(entry.balance));
+        const balanceDates = data?.success?.map((entry) =>
+          moment(entry.balance_date)
+        );
+        const balances = data?.success?.map((entry) =>
+          parseFloat(entry.balance)
+        );
 
         chartRef.current = new Chart(chart, {
           type: "line",
@@ -133,8 +141,7 @@ export const LineChart = ({ data }) => {
         });
       }
     }
-
-  }, [ ,data, state.graphTitle]);
+  }, [, data, state.graphTitle]);
 
   return (
     <Card withBorder p={"md"} mt={"md"}>
@@ -142,7 +149,15 @@ export const LineChart = ({ data }) => {
         Line Graph {state.graphTitle ? `- ${state.graphTitle}` : null}
       </Title>
       <Text size={"xs"}>Hover to see specific detail</Text>
-      <canvas id="chart-canvas" width="400" height="100"></canvas>
+      {data?.success ? (
+        <canvas id="chart-canvas" width="400" height="100"></canvas>
+      ) : (
+        <Flex align={"center"} justify={"center"} h={"200px"}>
+          <Text c={"dimmed"} size={"sm"}>
+            Not data to visualise
+          </Text>
+        </Flex>
+      )}
     </Card>
   );
 };

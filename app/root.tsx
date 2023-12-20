@@ -12,7 +12,7 @@ import {
 } from "@remix-run/react";
 import { MantineProvider, ColorSchemeScript, Container } from "@mantine/core";
 import { Header } from "./Header/Header";
-import { AppProvider } from "~/utils/state/store";
+import { AppProvider } from "~/utils/store";
 import { Footer } from "./Footer/Footer";
 
 export const links: LinksFunction = () => [

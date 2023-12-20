@@ -1,4 +1,4 @@
-import { initialState } from "~/utils/state/initial";
+import { initialState } from "~/utils/initial";
 
 const ActionTypes = {
   CLEAR_STATE: "CLEAR_STATE",

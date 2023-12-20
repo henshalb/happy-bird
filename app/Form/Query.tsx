@@ -1,9 +1,9 @@
 import { Button, Card, Loader, Text, TextInput, Textarea, Title, rem } from "@mantine/core";
 import { useNavigation, useSubmit } from "@remix-run/react";
 import { IconArrowRight } from "@tabler/icons-react";
-import { useAppContext } from "~/utils/state/store";
+import { useAppContext } from "~/utils/store";
 
-function QueryForm() {
+function QueryForm({data}) {
   const { state, dispatch } = useAppContext();
   const submit = useSubmit();
   const navigation = useNavigation();
@@ -30,6 +30,16 @@ function QueryForm() {
           Connect to database before querying
         </Text>
       )}
+
+
+      {
+        data?.error ?
+        <Text mt={"xs"} c={"red"} size={"xs"}>
+          {data?.error?.sqlMessage}
+        </Text>
+        : null
+      }
+
       <Button
         onClick={searchHandler}
         disabled={state.connected && state.query ? false : true}
