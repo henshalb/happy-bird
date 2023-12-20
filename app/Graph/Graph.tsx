@@ -19,11 +19,14 @@ export const LineChart = ({ data }) => {
   const chartRef = useRef(null);
   const { state, dispatch } = useAppContext();
 
-  console.log(data);
-
   useEffect(() => {
     const ctx = document.getElementById("myChart");
-    if (ctx && data) {
+    if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null
+      }
+
+    if (data) {
       if (data?.length > 0) {
         let givenNames = {
           timestamp: "AC Thermometer Log",
@@ -38,9 +41,14 @@ export const LineChart = ({ data }) => {
         }
       }
 
-      if (chartRef.current) {
-        chartRef.current.destroy();
-      }
+      // if (chartRef.current) {
+      //   chartRef.current
+      // }
+
+      console.log(state)
+      console.log("statew")
+      console.log(data)
+      console.log("statew")
 
       if (state.graphTitle == "AC Thermometer Log") {
         const timestamps = data.map((entry) => moment(entry.timestamp));
@@ -73,9 +81,8 @@ export const LineChart = ({ data }) => {
           },
         });
       } else if (state.graphTitle == "Daily Email Log") {
-        const logDates = data.map((entry) => moment(entry.log_date)); // Use moment to parse log_dates
+        const logDates = data.map((entry) => moment(entry.log_date));
 
-        // Extract individual employee data
         const employeeData = Object.keys(data[0])
           .filter((key) => key !== "log_date")
           .map((employee) => ({
@@ -83,7 +90,6 @@ export const LineChart = ({ data }) => {
             data: data.map((entry) => entry[employee]),
           }));
 
-        // Create a new chart instance
         chartRef.current = new Chart(ctx, {
           type: "line",
           data: {
@@ -91,26 +97,25 @@ export const LineChart = ({ data }) => {
             datasets: employeeData.map((employee) => ({
               label: employee.label,
               data: employee.data,
-              borderColor: getRandomColor(), // Function to generate random colors
+              borderColor: getRandomColor(),
               fill: false,
             })),
           },
           options: {
             scales: {
               x: {
-                type: "time", // Use 'time' for date scales
+                type: "time",
                 time: {
-                  unit: "day", // Adjust the time unit based on your data
+                  unit: "day",
                 },
               },
             },
           },
         });
       } else if (state.graphTitle == "Daily Account Balance") {
-        const balanceDates = data.map((entry) => moment(entry.balance_date)); // Use moment to parse balance_dates
+        const balanceDates = data.map((entry) => moment(entry.balance_date));
         const balances = data.map((entry) => parseFloat(entry.balance));
 
-        // Create a new chart instance
         chartRef.current = new Chart(ctx, {
           type: "line",
           data: {
@@ -119,7 +124,7 @@ export const LineChart = ({ data }) => {
               {
                 label: "Balance",
                 data: balances,
-                borderColor: "blue", // Set your desired color
+                borderColor: "blue",
                 fill: false,
               },
             ],
@@ -127,9 +132,9 @@ export const LineChart = ({ data }) => {
           options: {
             scales: {
               x: {
-                type: "time", // Use 'time' for date scales
+                type: "time",
                 time: {
-                  unit: "day", // Adjust the time unit based on your data
+                  unit: "day",
                 },
               },
             },
@@ -138,13 +143,7 @@ export const LineChart = ({ data }) => {
       }
     }
 
-    // Cleanup function
-    return () => {
-      if (chartRef.current) {
-        chartRef.current.destroy();
-      }
-    };
-  }, [data]);
+  }, [ ,data, state.graphTitle]);
 
   return (
     <Card withBorder p={"md"} mt={"md"}>

@@ -5,7 +5,7 @@ import { Footer } from "~/Footer/Footer";
 import { ConnectionForm } from "~/Form/Connection";
 import { QueryForm } from "~/Form/Query";
 import { LineChart } from "~/Graph/Graph";
-import { connectDatabase } from "~/utils/state/db.server";
+import { connectDatabase, pingDatabase } from "~/utils/state/db.server";
 import { useAppContext } from "~/utils/state/store";
 
 export const meta: MetaFunction = () => {
@@ -17,21 +17,22 @@ export const action = async ({ request }) => {
   const database = cookies?.match(/database=([^;]+)/)?.[1] || null;
   const username = cookies?.match(/username=([^;]+)/)?.[1] || null;
   const password = cookies?.match(/password=([^;]+)/)?.[1] || null;
-
-  const connection = connectDatabase(host, database, username, password);
   const data = await request.formData();
-
+  
   return new Promise((resolve, reject) => {
+    const connection = connectDatabase(host, database, username, password);
     connection.query(data.get("query"), (err, results, fields) => {
       if (err) {
         reject(err);
-        return;
+        return null;
       }
-      connection.end((err) => {
-        if (err) {
-          reject(err);
-          return;
+
+      connection.end((endErr) => {
+        if (endErr) {
+          reject(endErr);
+          return null;
         }
+
         resolve(results);
       });
     });
@@ -40,6 +41,9 @@ export const action = async ({ request }) => {
 
 export default function Index() {
   const actionData = useActionData();
+  console.log(actionData)
+  console.log(actionData)
+  console.log(actionData)
   return (
     <>
       <ConnectionForm />
