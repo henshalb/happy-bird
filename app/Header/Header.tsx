@@ -23,7 +23,7 @@ function Brand() {
   );
 }
 
-function Header() {
+export function Header() {
   return (
     <>
       <header className={classes.header}>
@@ -39,5 +39,3 @@ function Header() {
     </>
   );
 }
-
-export { Header };

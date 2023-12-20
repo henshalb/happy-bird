@@ -1,8 +1,7 @@
 import mysql from "mysql2";
 
-
+// Function to return a connection object
 export const connectDatabase = (host, database, username, password) => {
-  
   const connection = mysql.createConnection({
     host: host,
     database: database,
@@ -13,7 +12,7 @@ export const connectDatabase = (host, database, username, password) => {
 
   connection.connect((err) => {
     if (err) {
-      throw Error("Failed to establish a connection with database")
+      throw Error("Failed to establish a connection with database");
     }
   });
 

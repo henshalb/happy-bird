@@ -1,9 +1,17 @@
-import { Button, Card, Loader, Text, TextInput, Textarea, Title, rem } from "@mantine/core";
-import { useNavigation, useSubmit } from "@remix-run/react";
-import { IconArrowRight } from "@tabler/icons-react";
 import { useAppContext } from "~/utils/store";
+import { IconArrowRight } from "@tabler/icons-react";
+import { useNavigation, useSubmit } from "@remix-run/react";
+import {
+  Button,
+  Card,
+  Loader,
+  Text,
+  Textarea,
+  Title,
+  rem,
+} from "@mantine/core";
 
-function QueryForm({data}) {
+function QueryForm({ data }) {
   const { state, dispatch } = useAppContext();
   const submit = useSubmit();
   const navigation = useNavigation();
@@ -23,7 +31,7 @@ function QueryForm({data}) {
         mt={"xs"}
         defaultValue={state.query}
         placeholder="Enter your MySQL query here"
-        onChange={(e) => dispatch({query: e.target.value})}
+        onChange={(e) => dispatch({ query: e.target.value })}
       />
       {state.connected ? null : (
         <Text mt={"xs"} size={"xs"}>
@@ -31,14 +39,11 @@ function QueryForm({data}) {
         </Text>
       )}
 
-
-      {
-        data?.error ?
+      {data?.error ? (
         <Text mt={"xs"} c={"red"} size={"xs"}>
           {data?.error?.sqlMessage}
         </Text>
-        : null
-      }
+      ) : null}
 
       <Button
         onClick={searchHandler}
@@ -48,14 +53,16 @@ function QueryForm({data}) {
         variant={"outline"}
         fullWidth={false}
       >
-        {navigation.state == "submitting" ? 
-            <>
+        {navigation.state == "submitting" ? (
+          <>
             <Loader size="xs" type="dots" />
-            </>
-            : <>
+          </>
+        ) : (
+          <>
             Visualise
-          <IconArrowRight size={20} style={{ marginLeft: rem(8)}} />
-            </> }
+            <IconArrowRight size={20} style={{ marginLeft: rem(8) }} />
+          </>
+        )}
       </Button>
     </Card>
   );

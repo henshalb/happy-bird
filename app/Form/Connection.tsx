@@ -9,10 +9,10 @@ import {
   Group,
   PasswordInput,
 } from "@mantine/core";
-import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { useAppContext } from "~/utils/store";
-import { IconCheck, IconCircle, IconCircleFilled } from "@tabler/icons-react";
+import { IconCircleFilled } from "@tabler/icons-react";
 
 function ConnectionForm() {
   const { state, dispatch } = useAppContext();
@@ -117,11 +117,13 @@ function ConnectionForm() {
             w={"min-content"}
             variant={"light"}
             fullWidth={false}
-            onClick={()=>{dispatch({connected: false})}}
+            onClick={() => {
+              dispatch({ connected: false });
+            }}
           >
             Edit
           </Button>
-          </Group>
+        </Group>
       ) : (
         <Button
           disabled={buttonDisabled}

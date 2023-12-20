@@ -1,6 +1,5 @@
-import { Container, Text, ActionIcon, rem } from '@mantine/core';
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 import classes from './Footer.module.css';
+import { Container, Text } from '@mantine/core';
 
 export function Footer() {
   return (

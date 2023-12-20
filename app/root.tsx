@@ -1,5 +1,4 @@
 import "@mantine/core/styles.css";
-
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
@@ -10,10 +9,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { MantineProvider, ColorSchemeScript, Container } from "@mantine/core";
 import { Header } from "./Header/Header";
 import { AppProvider } from "~/utils/store";
 import { Footer } from "./Footer/Footer";
+import { MantineProvider, ColorSchemeScript, Container } from "@mantine/core";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),

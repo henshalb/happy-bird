@@ -1,13 +1,16 @@
 ### Coding challenge
 
 ### How to run locally?
-Clone repository and in the project directory
 ```
-bun i && bun run dev
+npm i && npm run dev
 ```
 
 ### Tech stack
-- Expressjs
-- Reactjs
-- Mantine
+- Express.js
+- React.js
+
+### Libraries used
+- Mantine CSS
+- Chart.js
+- js-cokie
 - mysql2
