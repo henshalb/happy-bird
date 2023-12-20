@@ -2,8 +2,21 @@
 export default {
   postcss: true,
   ignoredRouteFiles: ["**/.*"],
-  // appDirectory: "app",
-  // assetsBuildDirectory: "public/build",
-  // publicPath: "/build/",
-  // serverBuildPath: "build/index.js",
+  // browserNodeBuiltinsPolyfill: {
+  //   modules: {
+  //     crypto: true,
+  //     events: true,
+  //     net: true,
+  //     tls: true,
+  //     url: true,
+  //     buffer: true,
+  //     util: true,
+  //     timers: true,
+  //     fs: true,
+  //     stream: true,
+  //     string_decoder: true,
+  //     process: true,
+  //     zlib: true,
+  //   },
+  // },
 };

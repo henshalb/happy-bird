@@ -16,8 +16,17 @@
     "@remix-run/node": "^2.2.0",
     "@remix-run/react": "^2.2.0",
     "@remix-run/serve": "^2.2.0",
+    "@tabler/icons-react": "^2.44.0",
+    "chart.js": "^4.4.1",
+    "chartjs-adapter-moment": "^1.0.1",
+    "i": "^0.3.7",
     "isbot": "^3.7.0",
+    "js-cookie": "^3.0.5",
+    "moment": "^2.29.4",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.5",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {

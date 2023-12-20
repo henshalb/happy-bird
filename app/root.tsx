@@ -10,7 +10,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+import { MantineProvider, ColorSchemeScript, Container } from "@mantine/core";
+import { Header } from "./Header/Header";
+import { AppProvider } from "~/utils/state/store";
+import { Footer } from "./Footer/Footer";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -18,22 +21,28 @@ export const links: LinksFunction = () => [
 
 export default function App() {
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Meta />
-        <Links />
-        <ColorSchemeScript />
-      </head>
-      <body>
-        <MantineProvider>
-          <Outlet />
-          <ScrollRestoration />
-          <Scripts />
-          <LiveReload />
-        </MantineProvider>
-      </body>
-    </html>
+    <AppProvider>
+      <html lang="en">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <Meta />
+          <Links />
+          <ColorSchemeScript />
+        </head>
+        <body>
+          <MantineProvider>
+            <Header />
+            <Container size="lg">
+              <Outlet />
+            </Container>
+            <Footer />
+            <ScrollRestoration />
+            <Scripts />
+            <LiveReload />
+          </MantineProvider>
+        </body>
+      </html>
+    </AppProvider>
   );
 }
