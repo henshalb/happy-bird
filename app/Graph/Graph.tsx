@@ -20,7 +20,7 @@ export const LineChart = ({ data }) => {
   const { state, dispatch } = useAppContext();
 
   useEffect(() => {
-    const ctx = document.getElementById("myChart");
+    const chart = document.getElementById("chart-canvas");
     if (chartRef.current) {
         chartRef.current.destroy();
         chartRef.current = null
@@ -41,19 +41,10 @@ export const LineChart = ({ data }) => {
         }
       }
 
-      // if (chartRef.current) {
-      //   chartRef.current
-      // }
-
-      console.log(state)
-      console.log("statew")
-      console.log(data)
-      console.log("statew")
-
       if (state.graphTitle == "AC Thermometer Log") {
         const timestamps = data.map((entry) => moment(entry.timestamp));
         const temperatures = data.map((entry) => parseFloat(entry.temperature));
-        chartRef.current = new Chart(ctx, {
+        chartRef.current = new Chart(chart, {
           type: "line",
           data: {
             labels: timestamps.map((timestamp) => timestamp.format()),
@@ -90,7 +81,7 @@ export const LineChart = ({ data }) => {
             data: data.map((entry) => entry[employee]),
           }));
 
-        chartRef.current = new Chart(ctx, {
+        chartRef.current = new Chart(chart, {
           type: "line",
           data: {
             labels: logDates,
@@ -116,7 +107,7 @@ export const LineChart = ({ data }) => {
         const balanceDates = data.map((entry) => moment(entry.balance_date));
         const balances = data.map((entry) => parseFloat(entry.balance));
 
-        chartRef.current = new Chart(ctx, {
+        chartRef.current = new Chart(chart, {
           type: "line",
           data: {
             labels: balanceDates,
@@ -151,7 +142,7 @@ export const LineChart = ({ data }) => {
         Line Graph {state.graphTitle ? `- ${state.graphTitle}` : null}
       </Title>
       <Text size={"xs"}>Hover to see specific detail</Text>
-      <canvas id="myChart" width="400" height="100"></canvas>
+      <canvas id="chart-canvas" width="400" height="100"></canvas>
     </Card>
   );
 };

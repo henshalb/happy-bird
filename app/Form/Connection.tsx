@@ -45,7 +45,6 @@ function ConnectionForm() {
       state.database,
       state.password,
     ];
-    console.log(verifier)
     if (verifier.includes("")) {
       setButtonDisabled(true);
     } else {
